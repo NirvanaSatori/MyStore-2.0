@@ -15,18 +15,17 @@ function Navbar() {
           <img src={logo} alt="commerce.js" height="25px" className={classes.image} /> MyStore
         </Typography>
         <div className={classes.grow} />
-        {location.pathname === '/' && (
+        {/* {location.pathname === '/' && (
         <div className={classes.button}>
           <IconButton  to="/cart" aria-label="Show cart items" color="inherit">
-            <Badge badgeContent={totalItems} color="secondary">
+            <Badge color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
         </div>
-        )}
+        )} */}
       </Toolbar>
     </AppBar>
-    {renderMobileMenu}
   </>
   )
 }
