@@ -6,7 +6,7 @@ import logo from '../../assets/commerce.png'
 import useStyles from './styles';
 // import { Link, useLocation } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({totalItems}) {
     const classes = useStyles();
     // const location = useLocation();
 

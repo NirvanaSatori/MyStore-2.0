@@ -12,7 +12,7 @@ function Product({product, onAddToCart }) {
 
   return (
     <Card className={classes.root} >
-      <CardMedia className={classes.media} image={product.media.source} title={product.name} />
+      <CardMedia className={classes.media}  title={product.name} />
       <CardContent>
         <div className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
