@@ -3,9 +3,11 @@ import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '
 import { ShoppingCart } from '@material-ui/icons'
 import logo from '../../assets/commerce.png'
 import useStyles from './styles';
+// import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
     const classes = useStyles();
+    // const location = useLocation();
 
   return (
     <>
