@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { commerce } from './lib/commerce'
-import { Navbar, Products } from './components';
+import { Navbar, Products, Cart, Checkout } from './components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
 
 function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState({});
+  const [order, setOrder] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const fetchProducts = async () => {
     const { data } = await commerce.products.list()
@@ -21,6 +25,44 @@ function App() {
 
     setCart(item.cart);
   };
+
+  const handleUpdateCartQty = async (lineItemId, quantity) => {
+    const response = await commerce.cart.update(lineItemId, { quantity });
+
+    setCart(response.cart);
+  };
+
+  const handleRemoveFromCart = async (lineItemId) => {
+    const response = await commerce.cart.remove(lineItemId);
+
+    setCart(response.cart);
+  };
+
+  const handleEmptyCart = async () => {
+    const response = await commerce.cart.empty();
+
+    setCart(response.cart);
+  };
+
+  const refreshCart = async () => {
+    const newCart = await commerce.cart.refresh();
+
+    setCart(newCart);
+  };
+
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+
+      setOrder(incomingOrder);
+
+      refreshCart();
+    } catch (error) {
+      setErrorMessage(error.data.error.message);
+    }
+  };
+
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   useEffect(() => {
     fetchProducts()
