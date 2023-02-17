@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { commerce } from './lib/commerce'
-import { Navbar, Products, Cart, Checkout } from './components';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import { Navbar, Products, Cart, Checkout } from './components';
+import { Navbar, Products, Cart} from './components';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 
 function App() {
@@ -62,34 +63,30 @@ function App() {
     }
   };
 
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
-
   useEffect(() => {
     fetchProducts()
     fetchCart()
   }, [])
   
   // console.log(products)
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   return (
-    <Router>
-    <div style={{ display: 'flex' }}>
-      <CssBaseline />
-      <Navbar totalItems={cart.total_items} handleDrawerToggle={handleDrawerToggle} />
-      <Switch>
-        <Route exact path="/">
-          <Products products={products} onAddToCart={handleAddToCart} handleUpdateCartQty />
-        </Route>
-        <Route exact path="/cart">
-          <Cart cart={cart} onUpdateCartQty={handleUpdateCartQty} onRemoveFromCart={handleRemoveFromCart} onEmptyCart={handleEmptyCart} />
-        </Route>
-        <Route path="/checkout" exact>
-          <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
-        </Route>
-      </Switch>
-    </div>
-  </Router>
-  )
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <CssBaseline />
+          <Navbar totalItems={cart.total_items} handleDrawerToggle={handleDrawerToggle} />
+          <Routes>
+          <Route exact path="/" element={<Products products={products} onAddToCart={handleAddToCart} handleUpdateCartQty />}/>
+            <Route exact path="/cart" element={<Cart cart={cart} onUpdateCartQty={handleUpdateCartQty} onRemoveFromCart={handleRemoveFromCart} onEmptyCart={handleEmptyCart} />}/>
+             
+            {/* <Route path="/checkout" exact>
+              <Checkout cart={cart} order={order} onCaptureCheckout={handleCaptureCheckout} error={errorMessage} />
+            </Route> */}
+          </Routes>
+        </div>
+      </Router>
+    );
 }
 
 export default App
