@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CssBaseline, Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { commerce } from '../../../lib/commerce';
 import AddressForm from '../AddressForm';
@@ -14,7 +14,7 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -23,11 +23,11 @@ const Checkout = ({ cart, onCaptureCheckout, order, error }) => {
     if (cart.id) {
       const generateToken = async () => {
         try {
-          const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-
-          setCheckoutToken(token);
+          setCheckoutToken(await commerce.checkout.generateToken(cart.id, { type: 'cart' }));
+          // console.log(token)
+          // (token);
         } catch {
-          if (activeStep !== steps.length) history.push('/');
+          if (activeStep !== steps.length) navigate('/');
         }
       };
 

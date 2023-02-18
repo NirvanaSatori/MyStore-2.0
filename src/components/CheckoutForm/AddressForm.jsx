@@ -53,6 +53,7 @@ const AddressForm = ({ checkoutToken, test }) => {
       <Typography variant="h6" gutterBottom>Shipping address</Typography>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit((data) => test({ ...data, shippingCountry, shippingSubdivision, shippingOption }))}>
+        {/* <form onSubmit=''> */}
           <Grid container spacing={3}>
             <FormInput required name="firstName" label="First name" />
             <FormInput required name="lastName" label="Last name" />
@@ -102,4 +103,4 @@ const AddressForm = ({ checkoutToken, test }) => {
   );
 };
 
-export default AddressForm;
+export default AddressForm;  
